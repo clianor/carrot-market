@@ -1,18 +1,22 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import type { Page } from '../types/page';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import type { NextPage } from 'next';
 
-interface MyAppProps extends AppProps {
-  Component: Page;
-}
+export type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
-function MyApp({ Component, pageProps }: MyAppProps) {
-  const getLayout = Component.getLayout || ((page: ReactElement) => page);
-  return getLayout(
-    <div className="w-full max-w-xl mx-auto">
-      <Component {...pageProps} />
-    </div>,
+export type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page) => page);
+  return (
+    <>
+      <div className="w-full max-w-xl mx-auto">{getLayout(<Component {...pageProps} />)}</div>
+    </>
   );
 }
 

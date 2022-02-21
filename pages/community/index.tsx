@@ -1,8 +1,8 @@
-import { Page } from '../../types/page';
 import Layout from '../../components/layout';
 import { ReactElement } from 'react';
+import { NextPageWithLayout } from '../_app';
 
-const Community: Page = () => {
+const Community: NextPageWithLayout = () => {
   return (
     <div className="space-y-4 divide-y-[2px]">
       {[1, 2, 3, 4, 5].map((_, i) => {

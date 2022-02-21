@@ -1,8 +1,8 @@
 import Layout from '../../components/layout';
-import { Page } from '../../types/page';
 import { ReactElement } from 'react';
+import { NextPageWithLayout } from '../_app';
 
-const Chats: Page = () => {
+const Chats: NextPageWithLayout = () => {
   return (
     <div className="divide-y-[1px]">
       {[1, 1, 1, 1, 1, 1].map((_, i) => {

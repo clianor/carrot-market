@@ -1,8 +1,8 @@
-import Layout from '../components/layout';
-import { Page } from '../types/page';
 import { ReactElement } from 'react';
+import Layout from '../components/layout';
+import { NextPageWithLayout } from './_app';
 
-const Home: Page = () => {
+const Home: NextPageWithLayout = () => {
   return (
     <div className="flex flex-col space-y-5 divide-y">
       {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (

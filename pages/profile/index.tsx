@@ -2,7 +2,7 @@ import Layout from '../../components/layout';
 import { Page } from '../../types/page';
 import { ReactElement } from 'react';
 
-const Profile: Page = () => {
+const Profile: NextPageWithLayout = () => {
   return (
     <div className="px-4">
       <div className="flex items-center mt-4 space-x-3">
