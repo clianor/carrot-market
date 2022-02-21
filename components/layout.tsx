@@ -103,7 +103,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
               <span>채팅</span>
             </a>
           </Link>
-          <Link href="/live">
+          <Link href="/lives">
             <a className="flex flex-col items-center space-y-2">
               <svg
                 className="w-6 h-6"
