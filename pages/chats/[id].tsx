@@ -94,7 +94,7 @@ const ChatDetail: NextPage = () => {
         </div>
       </div>
       <div className="fixed py-2 bg-white bottom-0 inset-x-0">
-        <div className="flex relative max-w-md items-center  w-full mx-auto">
+        <div className="flex relative max-w-md items-center w-full mx-auto">
           <input
             type="text"
             className="shadow-sm rounded-full w-full border-gray-300 focus:ring-orange-500

@@ -1,13 +1,13 @@
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 
 const Live: NextPage = () => {
   return (
-    <div className="py-10 space-y-4 divide-y-2">
+    <div className="py-10 space-y-4 divide-y-[1px]">
       {[1, 2, 3, 4, 5, 6].map((_, i) => {
         return (
           <div key={i} className="pt-4 px-4">
             <div className="w-full rounded-md shadow-sm bg-slate-300 aspect-video" />
-            <h3 className="text-gray-700 text-lg mt-2">Let&apos;s try potatos</h3>
+            <h1 className="text-2xl mt-2 font-bold text-gray-900">Galaxy S50</h1>
           </div>
         );
       })}
