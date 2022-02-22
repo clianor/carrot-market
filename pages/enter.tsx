@@ -13,9 +13,10 @@ interface EnterForm {
 
 const Enter: NextPage = () => {
   const [enter, { loading, data, error }] = useMutation<EnterForm>('/api/users/enter');
-  const [submitting, setSubmitting] = useState(false);
   const { register, reset, handleSubmit } = useForm<EnterForm>();
   const [method, setMethod] = useState<'email' | 'phone'>('email');
+
+  console.log(loading, data, error);
 
   const onEmailClick = () => {
     reset();
@@ -27,8 +28,9 @@ const Enter: NextPage = () => {
     setMethod('phone');
   };
 
-  const onValid = (data: EnterForm) => {
-    enter(data);
+  const onValid = (validForm: EnterForm) => {
+    if (loading) return;
+    enter(validForm);
   };
 
   return (
@@ -82,9 +84,9 @@ const Enter: NextPage = () => {
               required
             />
           ) : null}
-          {method === 'email' ? <Button text={submitting ? 'Loading' : 'Get login link'} /> : null}
+          {method === 'email' ? <Button text={loading ? 'Loading' : 'Get login link'} /> : null}
           {method === 'phone' ? (
-            <Button text={submitting ? 'Loading' : 'Get one-time password'} />
+            <Button text={loading ? 'Loading' : 'Get one-time password'} />
           ) : null}
         </form>
         <div className="mt-8">
