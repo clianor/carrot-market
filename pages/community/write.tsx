@@ -1,7 +1,7 @@
-import TextArea from '../../components/textarea';
-import Button from '../../components/button';
+import TextArea from '@components/textarea';
+import Button from '@components/button';
 import { NextPageWithLayout } from '../_app';
-import Layout from '../../components/layout';
+import Layout from '@components/layout';
 
 const Write: NextPageWithLayout = () => {
   return (

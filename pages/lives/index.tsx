@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
 import Link from 'next/link';
-import Layout from '../../components/layout';
+import Layout from '@components/layout';
 import { NextPageWithLayout } from '../_app';
-import FloatingButton from '../../components/floating-button';
+import FloatingButton from '@components/floating-button';
 
 const Live: NextPageWithLayout = () => {
   return (

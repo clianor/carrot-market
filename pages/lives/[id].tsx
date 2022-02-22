@@ -1,6 +1,6 @@
-import Message from '../../components/message';
 import { NextPageWithLayout } from '../_app';
-import Layout from '../../components/layout';
+import Message from '@components/message';
+import Layout from '@components/layout';
 
 const LiveDetail: NextPageWithLayout = () => {
   return (

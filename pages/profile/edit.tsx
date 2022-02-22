@@ -1,7 +1,7 @@
 import { NextPageWithLayout } from '../_app';
-import Input from '../../components/input';
-import Button from '../../components/button';
-import Layout from '../../components/layout';
+import Input from '@components/input';
+import Button from '@components/button';
+import Layout from '@components/layout';
 
 const EditProfile: NextPageWithLayout = () => {
   return (

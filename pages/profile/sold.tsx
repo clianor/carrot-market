@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from '../_app';
-import Item from '../../components/item';
-import Layout from '../../components/layout';
+import Item from '@components/item';
+import Layout from '@components/layout';
 
 const Sold: NextPageWithLayout = () => {
   return (
