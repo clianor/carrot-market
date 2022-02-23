@@ -1,10 +1,15 @@
+import useUser from '@libs/client/useUser';
+import Head from 'next/head';
 import { ReactElement } from 'react';
+import FloatingButton from '../components/floating-button';
+import Item from '../components/item';
 import Layout from '../components/layout';
 import { NextPageWithLayout } from './_app';
-import Item from '../components/item';
-import FloatingButton from '../components/floating-button';
 
 const Home: NextPageWithLayout = () => {
+  const user = useUser();
+  console.log(user);
+
   return (
     <div className="flex flex-col space-y-5 divide-y">
       {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
@@ -34,6 +39,9 @@ const Home: NextPageWithLayout = () => {
 Home.getLayout = (page: ReactElement) => {
   return (
     <Layout title="홈" hasTabBar>
+      <Head>
+        <title>Home</title>
+      </Head>
       {page}
     </Layout>
   );
