@@ -5,7 +5,8 @@ interface InputProps {
   name: string;
   kind?: 'text' | 'phone' | 'price';
   type: string;
-  register: UseFormRegisterReturn;
+  placeholder?: string;
+  register?: UseFormRegisterReturn;
   required: boolean;
 }
 
@@ -13,8 +14,9 @@ export default function Input({
   label,
   name,
   kind = 'text',
-  register,
   type,
+  placeholder,
+  register,
   required,
 }: InputProps) {
   return (
@@ -27,6 +29,7 @@ export default function Input({
           <input
             id={name}
             required={required}
+            placeholder={placeholder}
             {...register}
             type={type}
             className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
@@ -41,6 +44,7 @@ export default function Input({
           <input
             id={name}
             required={required}
+            placeholder={placeholder}
             {...register}
             type={type}
             className="appearance-none pl-7 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
@@ -58,6 +62,7 @@ export default function Input({
           <input
             id={name}
             required={required}
+            placeholder={placeholder}
             {...register}
             type={type}
             className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md rounded-l-none shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
