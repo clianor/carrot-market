@@ -9,9 +9,9 @@ export default function withHandler(
   method: 'GET' | 'POST' | 'DELETE',
   callback: (req: NextApiRequest, res: NextApiResponse) => void,
 ) {
-  return async function (req: NextApiRequest, res: NextApiResponse) {
+  return async function (req: NextApiRequest, res: NextApiResponse): Promise<void> {
     if (req.method !== method) {
-      return res.status(405).end();
+      res.status(405).end();
     }
 
     try {
