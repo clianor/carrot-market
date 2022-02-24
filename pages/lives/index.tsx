@@ -1,8 +1,7 @@
-import { ReactElement } from 'react';
-import Link from 'next/link';
-import Layout from '@components/layout';
-import { NextPageWithLayout } from '../_app';
 import FloatingButton from '@components/floating-button';
+import Layout from '@components/layout';
+import Link from 'next/link';
+import { NextPageWithLayout } from '../_app';
 
 const Live: NextPageWithLayout = () => {
   return (
@@ -38,7 +37,7 @@ const Live: NextPageWithLayout = () => {
   );
 };
 
-Live.getLayout = (page: ReactElement) => {
+Live.getLayout = (page) => {
   return (
     <Layout title="라이브" hasTabBar>
       {page}

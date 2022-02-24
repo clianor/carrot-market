@@ -1,8 +1,7 @@
-import { ReactElement } from 'react';
-import Link from 'next/link';
-import Layout from '@components/layout';
-import { NextPageWithLayout } from '../_app';
 import FloatingButton from '@components/floating-button';
+import Layout from '@components/layout';
+import Link from 'next/link';
+import { NextPageWithLayout } from '../_app';
 
 const Community: NextPageWithLayout = () => {
   return (
@@ -80,7 +79,7 @@ const Community: NextPageWithLayout = () => {
   );
 };
 
-Community.getLayout = (page: ReactElement) => {
+Community.getLayout = (page) => {
   return (
     <Layout title="동네생활" hasTabBar>
       {page}

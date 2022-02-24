@@ -1,6 +1,5 @@
-import { ReactElement } from 'react';
-import Link from 'next/link';
 import Layout from '@components/layout';
+import Link from 'next/link';
 import { NextPageWithLayout } from '../_app';
 
 const Profile: NextPageWithLayout = () => {
@@ -148,7 +147,7 @@ const Profile: NextPageWithLayout = () => {
   );
 };
 
-Profile.getLayout = (page: ReactElement) => {
+Profile.getLayout = (page) => {
   return (
     <Layout hasTabBar title="나의 캐럿">
       {page}

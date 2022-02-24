@@ -1,19 +1,32 @@
+import FloatingButton from '@components/floating-button';
+import Item from '@components/item';
+import Layout from '@components/layout';
 import useUser from '@libs/client/useUser';
+import { Product } from '@prisma/client';
 import Head from 'next/head';
-import { ReactElement } from 'react';
-import FloatingButton from '../components/floating-button';
-import Item from '../components/item';
-import Layout from '../components/layout';
+import useSWR from 'swr';
 import { NextPageWithLayout } from './_app';
 
+interface ProductsResponse {
+  ok: boolean;
+  products: Product[];
+}
+
 const Home: NextPageWithLayout = () => {
-  const { data, isLoading } = useUser();
-  console.log(data, isLoading);
+  const { user, isLoading } = useUser();
+  const { data } = useSWR<ProductsResponse>('/api/products');
 
   return (
     <div className="flex flex-col space-y-5 divide-y">
-      {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-        <Item id={i} key={i} title="iPhone 14" price={99} comments={1} hearts={1} />
+      {data?.products?.map((product) => (
+        <Item
+          id={product.id}
+          key={product.id}
+          title={product.name}
+          price={product.price}
+          comments={1}
+          hearts={1}
+        />
       ))}
       <FloatingButton href="/products/upload">
         <svg
@@ -36,7 +49,7 @@ const Home: NextPageWithLayout = () => {
   );
 };
 
-Home.getLayout = (page: ReactElement) => {
+Home.getLayout = (page) => {
   return (
     <Layout title="홈" hasTabBar>
       <Head>

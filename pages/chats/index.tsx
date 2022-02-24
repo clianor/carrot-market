@@ -1,6 +1,5 @@
-import { ReactElement } from 'react';
-import Link from 'next/link';
 import Layout from '@components/layout';
+import Link from 'next/link';
 import { NextPageWithLayout } from '../_app';
 
 const Chats: NextPageWithLayout = () => {
@@ -23,7 +22,7 @@ const Chats: NextPageWithLayout = () => {
   );
 };
 
-Chats.getLayout = (page: ReactElement) => {
+Chats.getLayout = (page) => {
   return (
     <Layout title="채팅" hasTabBar>
       {page}

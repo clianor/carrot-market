@@ -1,8 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import withHandler, { type ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
-import twilio from 'twilio';
+import withHandler, { type ResponseType } from '@libs/server/withHandler';
 import mail from '@sendgrid/mail';
+import { NextApiRequest, NextApiResponse } from 'next';
+import twilio from 'twilio';
 
 mail.setApiKey(process.env.SENDGRID_KEY!);
 
@@ -52,7 +52,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
 }
 
 export default withHandler({
-  method: 'POST',
+  methods: ['POST'],
   handler,
   isPrivate: false,
 });

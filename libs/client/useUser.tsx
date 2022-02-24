@@ -11,5 +11,5 @@ export default function useUser() {
       router.replace('/enter');
     }
   }, [data, router]);
-  return { data: data?.profile, isLoading: !data && !error };
+  return { user: data?.profile, isLoading: !data && !error };
 }
