@@ -7,8 +7,8 @@ import Layout from '../components/layout';
 import { NextPageWithLayout } from './_app';
 
 const Home: NextPageWithLayout = () => {
-  const user = useUser();
-  console.log(user);
+  const { data, isLoading } = useUser();
+  console.log(data, isLoading);
 
   return (
     <div className="flex flex-col space-y-5 divide-y">
