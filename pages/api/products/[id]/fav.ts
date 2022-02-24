@@ -1,6 +1,5 @@
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import { withApiSession } from '@libs/server/withSession';
-import { Fav } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) {
@@ -8,10 +7,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
     query: { id },
     session: { user },
   } = req;
-
-  const alreadyExists: Fav = await client.fav.findFirst({
+  const alreadyExists = await client.fav.findFirst({
     where: {
-      productId: +id.toString,
+      productId: +id,
       userId: user?.id,
     },
   });
@@ -38,7 +36,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
       },
     });
   }
-
   res.json({ ok: true });
 }
 

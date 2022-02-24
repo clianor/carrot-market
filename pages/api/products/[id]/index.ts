@@ -1,3 +1,4 @@
+import client from '@libs/server/client';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import { withApiSession } from '@libs/server/withSession';
 import { Product } from '@prisma/client';
@@ -6,6 +7,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) {
   const {
     query: { id },
+    session: { user },
   } = req;
 
   const product: Product = await client.product.findUnique({
@@ -39,7 +41,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
     },
   });
 
-  res.json({ ok: true, product, relatedProducts });
+  const isLiked = !!(await client.fav.findFirst({
+    where: {
+      productId: product?.id,
+      userId: user?.id,
+    },
+    select: {
+      id: true,
+    },
+  }));
+
+  res.json({ ok: true, product, relatedProducts, isLiked });
 }
 
 export default withApiSession(
