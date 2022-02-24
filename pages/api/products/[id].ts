@@ -1,12 +1,14 @@
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import { withApiSession } from '@libs/server/withSession';
+import { Product } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) {
   const {
     query: { id },
   } = req;
-  const product = await client.product.findUnique({
+
+  const product: Product = await client.product.findUnique({
     where: {
       id: +id.toString(),
     },
@@ -20,8 +22,24 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
       },
     },
   });
-  console.log(product);
-  res.json({ ok: true, product });
+
+  const terms = product?.name.split(' ').map((word) => ({
+    name: {
+      contains: word,
+    },
+  }));
+  const relatedProducts = await client.product.findMany({
+    where: {
+      OR: terms,
+      AND: {
+        id: {
+          not: product?.id,
+        },
+      },
+    },
+  });
+
+  res.json({ ok: true, product, relatedProducts });
 }
 
 export default withApiSession(
