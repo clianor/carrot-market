@@ -1,4 +1,3 @@
-import client from '@libs/server/client';
 import withHandler, { type ResponseType } from '@libs/server/withHandler';
 import mail from '@sendgrid/mail';
 import { NextApiRequest, NextApiResponse } from 'next';
