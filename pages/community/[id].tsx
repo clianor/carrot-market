@@ -5,6 +5,8 @@ import { cls } from '@libs/client/utils';
 import { Answer, Post, User } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import type { NextPageWithLayout } from '../_app';
 
@@ -27,12 +29,30 @@ interface CommunityPostResponse {
   isWondering: boolean;
 }
 
+interface AnswerForm {
+  answer: string;
+}
+
+interface AnswerResponse {
+  ok: boolean;
+  response: Answer;
+}
+
 const CommunityPostDetail: NextPageWithLayout = () => {
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AnswerForm>();
   const { data, mutate } = useSWR<CommunityPostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null,
   );
-  const [wonder] = useMutation(`/api/posts/${router.query.id}/wonder`);
+  const [wonder, { loading }] = useMutation(`/api/posts/${router.query.id}/wonder`);
+  const [sendAnswer, { data: answerData, loading: answerLoading }] = useMutation<AnswerResponse>(
+    `/api/posts/${router.query.id}/answers`,
+  );
 
   const onWonderClick = () => {
     if (!data) return;
@@ -52,8 +72,21 @@ const CommunityPostDetail: NextPageWithLayout = () => {
       },
       false,
     );
-    wonder({});
+    if (!loading) {
+      wonder({});
+    }
   };
+
+  const onValid = (form: AnswerForm) => {
+    if (answerLoading) return;
+    sendAnswer(form);
+  };
+
+  useEffect(() => {
+    if (answerData && answerData.ok) {
+      reset();
+    }
+  }, [answerData, reset]);
 
   return (
     <div>
@@ -130,12 +163,26 @@ const CommunityPostDetail: NextPageWithLayout = () => {
           </div>
         ))}
       </div>
-      <div className="px-4">
-        <TextArea name="description" placeholder="Answer this question!" required />
+      <form className="px-4" onSubmit={handleSubmit(onValid)}>
+        <TextArea
+          name="description"
+          placeholder="Answer this question!"
+          required
+          register={register('answer', {
+            required: true,
+            minLength: {
+              value: 5,
+              message: 'min length is 5',
+            },
+          })}
+        />
+        {errors.answer && (
+          <span className="font-mono text-sm text-red-500 font-bold">{errors.answer.message}</span>
+        )}
         <button className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none ">
-          Reply
+          {answerLoading ? 'Loading...' : 'Reply'}
         </button>
-      </div>
+      </form>
     </div>
   );
 };
