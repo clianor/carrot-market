@@ -43,7 +43,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
     },
   });
 
-  res.json({ ok: true, post });
+  const isWondering = await client.wondering.findFirst({
+    where: {
+      postId: +id.toString(),
+      userId: user?.id,
+    },
+  });
+
+  res.json({ ok: true, post, isWondering });
 }
 
 export default withApiSession(
