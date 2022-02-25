@@ -30,7 +30,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
       },
     },
   });
-
   if (phone) {
     // const message = await twilioClient.messages.create({
     //   messagingServiceSid: process.env.TWILIO_MSID,
