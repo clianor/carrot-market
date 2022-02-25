@@ -11,7 +11,9 @@
     "db:gen": "prisma generate",
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
-    "db:pull": "prisma db pull"
+    "predb:push": "yarn db:gen",
+    "db:pull": "prisma db pull",
+    "predb:pull": "yarn db:gen"
   },
   "dependencies": {
     "@prisma/client": "^3.10.0",
