@@ -22,10 +22,12 @@ interface PostsResponse {
 const Community: NextPageWithLayout = () => {
   const { latitude, longitude } = useCoords();
   const { data } = useSWR<PostsResponse>(
-    `/api/posts?${new URLSearchParams({
-      latitude: latitude?.toString() || '',
-      longitude: longitude?.toString() || '',
-    }).toString()}`,
+    latitude && longitude
+      ? `/api/posts?${new URLSearchParams({
+          latitude: latitude?.toString() || '',
+          longitude: longitude?.toString() || '',
+        }).toString()}`
+      : null,
   );
 
   return (
