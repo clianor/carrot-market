@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
     session: { user },
   } = req;
 
-  const product: Product = await client.product.findUnique({
+  const product: Product | null = await client.product.findUnique({
     where: {
       id: +id.toString(),
     },
