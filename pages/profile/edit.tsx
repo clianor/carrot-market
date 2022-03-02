@@ -1,14 +1,20 @@
 import Button from '@components/button';
 import Input from '@components/input';
 import Layout from '@components/layout';
+import useMutation from '@libs/client/useMutation';
 import useUser from '@libs/client/useUser';
 import { User } from '@prisma/client';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { NextPageWithLayout } from '../_app';
 
-interface EditProfileForm extends Pick<User, 'email' | 'phone'> {
+interface EditProfileForm extends Pick<User, 'email' | 'phone' | 'name'> {
   formErrors?: string;
+}
+
+interface EditProfileResponse {
+  ok: boolean;
+  error?: string;
 }
 
 const EditProfile: NextPageWithLayout = () => {
@@ -20,19 +26,28 @@ const EditProfile: NextPageWithLayout = () => {
     setError,
     formState: { errors },
   } = useForm<EditProfileForm>();
+  const [editProfile, { data, loading }] = useMutation<EditProfileResponse>(`/api/users/me`);
 
-  const onValid = ({ email, phone }: EditProfileForm) => {
-    if (email === '' && phone === '') {
-      setError('formErrors', {
+  const onValid = ({ email, phone, name }: EditProfileForm) => {
+    if (email === '' && phone === '' && name === '') {
+      return setError('formErrors', {
         message: 'Email OR Phone number are required. You need to choose one.',
       });
     }
+    editProfile({ email, phone, name });
   };
 
   useEffect(() => {
+    if (user?.name) setValue('name', user.name);
     if (user?.email) setValue('email', user.email);
     if (user?.phone) setValue('phone', user.phone);
   }, [setValue, user]);
+
+  useEffect(() => {
+    if (data && !data.ok && data.error) {
+      setError('formErrors', { message: data.error });
+    }
+  }, [data, setError]);
 
   return (
     <form className="py-10 px-4 space-y-4" onSubmit={handleSubmit(onValid)}>
@@ -46,6 +61,7 @@ const EditProfile: NextPageWithLayout = () => {
           <input id="picture" type="file" className="hidden" accept="image/*" />
         </label>
       </div>
+      <Input register={register('name')} required={false} label="Name" name="name" type="text" />
       <Input
         register={register('email')}
         required={false}
@@ -66,7 +82,7 @@ const EditProfile: NextPageWithLayout = () => {
           {errors.formErrors.message}
         </span>
       ) : null}
-      <Button text="Update profile" />
+      <Button text={loading ? 'Loading...' : 'Update profile'} />
     </form>
   );
 };
