@@ -13,7 +13,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
 
   if (req.method === 'POST') {
     const {
-      body: { email, phone, name },
+      body: { email, phone, name, avatar },
       session: { user },
     } = req;
 
@@ -22,6 +22,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
         id: user?.id,
       },
     });
+
+    // 아바타 업데이트
+    if (avatar) {
+      await client.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          avatar,
+        },
+      });
+    }
 
     // 이메일 업데이트
     if (email && email !== currentUser?.email) {
@@ -49,7 +61,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
           email,
         },
       });
-      res.json({ ok: true });
     }
 
     // 전화번호 업데이트
@@ -78,7 +89,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
           phone,
         },
       });
-      res.json({ ok: true });
     }
 
     // 이름 변경
@@ -92,6 +102,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>) 
         },
       });
     }
+
     res.json({ ok: true });
   }
 }

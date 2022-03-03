@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 declare global {
-  var client: any;
+  var client: PrismaClient;
 }
 
 const client: PrismaClient = global.client || new PrismaClient({ log: ['query'] });

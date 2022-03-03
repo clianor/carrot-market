@@ -39,16 +39,19 @@ const EditProfile: NextPageWithLayout = () => {
       });
     }
 
-    if (avatar && avatar.length > 0) {
-      const cloudflareRequest = await (await fetch(`/api/files`)).json();
-      console.log(cloudflareRequest);
-      // upload file to CF URL
-      return;
+    if (avatar && avatar.length > 0 && user) {
+      const form = new FormData();
+      form.append('file', avatar[0], user?.id + '-avatar');
+      const { url } = await fetch(`/api/files`, {
+        method: 'POST',
+        body: form,
+      }).then((r) => r.json());
+
       editProfile({
         email,
         phone,
         name,
-        // avatarUrl: CF URL
+        avatar: url,
       });
     } else {
       editProfile({
@@ -63,6 +66,7 @@ const EditProfile: NextPageWithLayout = () => {
     if (user?.name) setValue('name', user.name);
     if (user?.email) setValue('email', user.email);
     if (user?.phone) setValue('phone', user.phone);
+    if (user?.avatar) setAvatarPreview(user?.avatar);
   }, [setValue, user]);
 
   useEffect(() => {
@@ -74,8 +78,6 @@ const EditProfile: NextPageWithLayout = () => {
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
-      console.log(file);
-      console.log(URL.createObjectURL(file));
       setAvatarPreview(URL.createObjectURL(file));
     }
   }, [avatar]);
