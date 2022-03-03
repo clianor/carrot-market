@@ -4,11 +4,12 @@ import Layout from '@components/layout';
 import useMutation from '@libs/client/useMutation';
 import useUser from '@libs/client/useUser';
 import { User } from '@prisma/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NextPageWithLayout } from '../_app';
 
-interface EditProfileForm extends Pick<User, 'email' | 'phone' | 'name' | 'avatar'> {
+interface EditProfileForm extends Pick<User, 'email' | 'phone' | 'name'> {
+  avatar?: FileList;
   formErrors?: string;
 }
 
@@ -25,8 +26,11 @@ const EditProfile: NextPageWithLayout = () => {
     handleSubmit,
     setError,
     formState: { errors },
+    watch,
   } = useForm<EditProfileForm>();
   const [editProfile, { data, loading }] = useMutation<EditProfileResponse>(`/api/users/me`);
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const avatar = watch('avatar');
 
   const onValid = ({ email, phone, name }: EditProfileForm) => {
     if (email === '' && phone === '' && name === '') {
@@ -49,16 +53,35 @@ const EditProfile: NextPageWithLayout = () => {
     }
   }, [data, setError]);
 
+  useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      console.log(file);
+      console.log(URL.createObjectURL(file));
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  }, [avatar]);
+
   return (
     <form className="space-y-4 py-10 px-4" onSubmit={handleSubmit(onValid)}>
       <div className="flex items-center space-x-3">
-        <div className="h-14 w-14 rounded-full bg-slate-500" />
+        {avatarPreview ? (
+          <img src={avatarPreview} className="h-14 w-14 rounded-full bg-slate-500" />
+        ) : (
+          <div className="h-14 w-14 rounded-full bg-slate-500" />
+        )}
         <label
           htmlFor="picture"
           className="cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
         >
           Change
-          <input id="picture" type="file" className="hidden" accept="image/*" />
+          <input
+            id="picture"
+            type="file"
+            className="hidden"
+            accept="image/*"
+            {...register('avatar')}
+          />
         </label>
       </div>
       <Input register={register('name')} required={false} label="Name" name="name" type="text" />
