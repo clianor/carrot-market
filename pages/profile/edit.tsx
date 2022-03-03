@@ -32,13 +32,31 @@ const EditProfile: NextPageWithLayout = () => {
   const [avatarPreview, setAvatarPreview] = useState('');
   const avatar = watch('avatar');
 
-  const onValid = ({ email, phone, name }: EditProfileForm) => {
+  const onValid = async ({ email, phone, name }: EditProfileForm) => {
     if (email === '' && phone === '' && name === '') {
       return setError('formErrors', {
         message: 'Email OR Phone number are required. You need to choose one.',
       });
     }
-    editProfile({ email, phone, name });
+
+    if (avatar && avatar.length > 0) {
+      const cloudflareRequest = await (await fetch(`/api/files`)).json();
+      console.log(cloudflareRequest);
+      // upload file to CF URL
+      return;
+      editProfile({
+        email,
+        phone,
+        name,
+        // avatarUrl: CF URL
+      });
+    } else {
+      editProfile({
+        email,
+        phone,
+        name,
+      });
+    }
   };
 
   useEffect(() => {
