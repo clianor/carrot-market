@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
 import { cls } from '@libs/client/utils';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
 
 interface LayoutProps {
   title?: string;
@@ -17,11 +17,11 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
   };
   return (
     <div>
-      <div className="bg-white w-full h-12 max-w-xl justify-center text-lg px-10 font-medium  fixed text-gray-800 border-b top-0  flex items-center">
+      <div className="fixed top-0 flex h-12 w-full max-w-xl items-center justify-center  border-b bg-white px-10 text-lg  font-medium text-gray-800">
         {canGoBack ? (
           <button onClick={onClick} className="absolute left-4">
             <svg
-              className="w-6 h-6"
+              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -40,18 +40,18 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
       </div>
       <div className={cls('pt-12', hasTabBar ? 'pb-24' : '')}>{children}</div>
       {hasTabBar ? (
-        <nav className="bg-white max-w-xl text-gray-700 border-t fixed bottom-0 w-full px-10 pb-5 pt-3 flex justify-between text-xs">
+        <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700">
           <Link href="/">
             <a
               className={cls(
                 'flex flex-col items-center space-y-2 ',
                 router.pathname === '/'
                   ? 'text-orange-500'
-                  : 'hover:text-gray-500 transition-colors',
+                  : 'transition-colors hover:text-gray-500',
               )}
             >
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -73,11 +73,11 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
                 'flex flex-col items-center space-y-2 ',
                 router.pathname === '/community'
                   ? 'text-orange-500'
-                  : 'hover:text-gray-500 transition-colors',
+                  : 'transition-colors hover:text-gray-500',
               )}
             >
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -99,11 +99,11 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
                 'flex flex-col items-center space-y-2 ',
                 router.pathname === '/chats'
                   ? 'text-orange-500'
-                  : 'hover:text-gray-500 transition-colors',
+                  : 'transition-colors hover:text-gray-500',
               )}
             >
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -119,17 +119,17 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
               <span>채팅</span>
             </a>
           </Link>
-          <Link href="/lives">
+          <Link href="/streams">
             <a
               className={cls(
                 'flex flex-col items-center space-y-2 ',
-                router.pathname === '/lives'
+                router.pathname === '/streams'
                   ? 'text-orange-500'
-                  : 'hover:text-gray-500 transition-colors',
+                  : 'transition-colors hover:text-gray-500',
               )}
             >
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -151,11 +151,11 @@ export default function Layout({ title, canGoBack, hasTabBar, children }: Layout
                 'flex flex-col items-center space-y-2 ',
                 router.pathname === '/profile'
                   ? 'text-orange-500'
-                  : 'hover:text-gray-500 transition-colors',
+                  : 'transition-colors hover:text-gray-500',
               )}
             >
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
