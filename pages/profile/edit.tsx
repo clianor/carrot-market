@@ -4,6 +4,7 @@ import Layout from '@components/layout';
 import useMutation from '@libs/client/useMutation';
 import useUser from '@libs/client/useUser';
 import { User } from '@prisma/client';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NextPageWithLayout } from '../_app';
@@ -41,7 +42,7 @@ const EditProfile: NextPageWithLayout = () => {
 
     if (avatar && avatar.length > 0 && user) {
       const form = new FormData();
-      form.append('file', avatar[0], user?.id + '-avatar');
+      form.append('file', avatar[0], 'avatar/' + user?.id);
       const { url } = await fetch(`/api/files`, {
         method: 'POST',
         body: form,
@@ -85,11 +86,18 @@ const EditProfile: NextPageWithLayout = () => {
   return (
     <form className="space-y-4 py-10 px-4" onSubmit={handleSubmit(onValid)}>
       <div className="flex items-center space-x-3">
-        {avatarPreview ? (
-          <img src={avatarPreview} className="h-14 w-14 rounded-full bg-slate-500" />
-        ) : (
-          <div className="h-14 w-14 rounded-full bg-slate-500" />
-        )}
+        <div className="relative h-14 w-14 rounded-full bg-slate-500">
+          {avatarPreview && (
+            <Image
+              className="rounded-full"
+              src={avatarPreview}
+              alt="avatar"
+              layout="fill"
+              objectFit="cover"
+              quality={50}
+            />
+          )}
+        </div>
         <label
           htmlFor="picture"
           className="cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"

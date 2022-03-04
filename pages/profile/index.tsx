@@ -2,6 +2,7 @@ import Layout from '@components/layout';
 import useUser from '@libs/client/useUser';
 import { cls } from '@libs/client/utils';
 import { Review, User } from '@prisma/client';
+import Image from 'next/image';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { NextPageWithLayout } from '../_app';
@@ -22,7 +23,18 @@ const Profile: NextPageWithLayout = () => {
   return (
     <div className="px-4">
       <div className="flex items-center mt-4 space-x-3">
-        <div className="w-16 h-16 bg-slate-500 rounded-full" />
+        <div className="relative w-16 h-16 bg-slate-500 rounded-full">
+          {user?.avatar && (
+            <Image
+              className="rounded-full"
+              src={user.avatar}
+              alt="avatar"
+              layout="fill"
+              objectFit="cover"
+              quality={50}
+            />
+          )}
+        </div>
         <div className="flex flex-col">
           <span className="font-medium text-gray-900">{user?.name || '\u00A0'}</span>
           <Link href="/profile/edit">

@@ -4,6 +4,9 @@ const nextConfig = {
   experimental: {
     reactRoot: true,
   },
+  images: {
+    domains: [process.env.SP_URL.substring(8)],
+  },
 };
 
 module.exports = nextConfig;
