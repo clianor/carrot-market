@@ -23,16 +23,9 @@ const Profile: NextPageWithLayout = () => {
   return (
     <div className="px-4">
       <div className="flex items-center mt-4 space-x-3">
-        <div className="relative w-16 h-16 bg-slate-500 rounded-full">
+        <div className="relative w-16 h-16 bg-slate-500 rounded-full overflow-hidden">
           {user?.avatar && (
-            <Image
-              className="rounded-full"
-              src={user.avatar}
-              alt="avatar"
-              layout="fill"
-              objectFit="cover"
-              quality={50}
-            />
+            <Image src={user.avatar} alt="avatar" layout="fill" objectFit="cover" quality={50} />
           )}
         </div>
         <div className="flex flex-col">

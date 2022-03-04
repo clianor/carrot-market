@@ -7,7 +7,8 @@ import Head from 'next/head';
 import useSWR from 'swr';
 import { NextPageWithLayout } from './_app';
 
-export interface ProductWithCount extends Product {
+export interface ProductWithCount extends Omit<Product, 'image'> {
+  image?: string;
   _count: {
     favs: number;
   };
@@ -28,11 +29,13 @@ const Home: NextPageWithLayout = () => {
         <Item
           id={product.id}
           key={product.id}
+          image={product.image}
           title={product.name}
           price={product.price}
           hearts={product._count.favs}
         />
       ))}
+
       <FloatingButton href="/products/upload">
         <svg
           className="h-6 w-6"
@@ -49,6 +52,7 @@ const Home: NextPageWithLayout = () => {
             d="M12 6v6m0 0v6m0-6h6m-6 0H6"
           />
         </svg>
+        <span className="sr-only">Create Product</span>
       </FloatingButton>
     </div>
   );

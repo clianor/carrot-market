@@ -86,16 +86,9 @@ const EditProfile: NextPageWithLayout = () => {
   return (
     <form className="space-y-4 py-10 px-4" onSubmit={handleSubmit(onValid)}>
       <div className="flex items-center space-x-3">
-        <div className="relative h-14 w-14 rounded-full bg-slate-500">
+        <div className="relative h-14 w-14 rounded-full bg-slate-500 overflow-hidden">
           {avatarPreview && (
-            <Image
-              className="rounded-full"
-              src={avatarPreview}
-              alt="avatar"
-              layout="fill"
-              objectFit="cover"
-              quality={50}
-            />
+            <Image src={avatarPreview} alt="avatar" layout="fill" objectFit="cover" quality={50} />
           )}
         </div>
         <label

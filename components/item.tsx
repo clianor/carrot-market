@@ -1,18 +1,22 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface ItemProps {
-  title: string;
   id: number;
+  title: string;
+  image?: string;
   price: number;
   hearts: number;
 }
 
-export default function Item({ title, price, hearts, id }: ItemProps) {
+export default function Item({ title, image, price, hearts, id }: ItemProps) {
   return (
     <Link href={`/products/${id}`}>
       <a className="flex px-4 pt-5 cursor-pointer justify-between">
         <div className="flex space-x-4">
-          <div className="w-20 h-20 bg-gray-400 rounded-md" />
+          <div className="relative w-20 h-20 bg-gray-400 rounded-md overflow-hidden">
+            {image && <Image src={image} alt="avatar" layout="fill" objectFit="cover" />}
+          </div>
           <div className="pt-2 flex flex-col">
             <h3 className="text-sm font-medium text-gray-900">{title}</h3>
             <span className="font-medium mt-1 text-gray-900">${price}</span>
